@@ -92,7 +92,7 @@ export class AristonGalevoPlatform implements DynamicPlatformPlugin {
     this.gwId = galevo.gw;
     this.log.info("Found GALEVO device: %s", this.gwId);
 
-    // Register accessories
+    // Register accessories and clean up old ones
     this.registerAccessories();
 
     // Start polling
@@ -105,6 +105,15 @@ export class AristonGalevoPlatform implements DynamicPlatformPlugin {
   private registerAccessories(): void {
     const plantUuid = this.api.hap.uuid.generate(this.gwId + "-heating-flow-v1.1");
     const dhwUuid = this.api.hap.uuid.generate(this.gwId + "-dhw-v1.1");
+    const activeUuids = new Set([plantUuid, dhwUuid]);
+
+    // Remove any orphaned accessories from previous versions
+    const orphans = this.accessories.filter((a) => !activeUuids.has(a.UUID));
+    if (orphans.length > 0) {
+      this.log.info("Removing %d orphaned accessory(ies): %s",
+        orphans.length, orphans.map((a) => a.displayName).join(", "));
+      this.api.unregisterPlatformAccessories("homebridge-ariston-galevo", "AristonGalevo", orphans);
+    }
 
     // Heating Flow accessory
     let plantAcc = this.accessories.find((a) => a.UUID === plantUuid);
