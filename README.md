@@ -51,6 +51,12 @@ The plugin communicates with the Ariston NET cloud API (the same API used by the
 - **Heating Flow** — Controls the plant mode (Off = Summer/DHW only, Heat = Winter/heating + DHW) and the heating flow target temperature
 - **Hot Water** — Controls the domestic hot water target temperature
 
+## Support
+
+If you find this plugin useful, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-donate-yellow.svg)](https://buymeacoffee.com/m1hai)
+
 ## License
 
 ISC
