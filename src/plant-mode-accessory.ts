@@ -18,8 +18,8 @@ export class PlantModeAccessory {
 
   // Cached state
   private plantMode = PLANT_MODE_SUMMER;
-  private currentTemp = 20;
-  private targetTemp = 20;
+  private currentTemp = 35;
+  private targetTemp = 35;
   private tempMin = 35;
   private tempMax = 82;
   private tempStep = 1;

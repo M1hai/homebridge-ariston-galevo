@@ -165,8 +165,12 @@ export class AristonGalevoPlatform implements DynamicPlatformPlugin {
         stateMap.get("ChFlowSetpointTemp"),
         stateMap.get("DhwTemp"),
       );
-    } catch (err) {
-      this.log.error("Poll failed: %s", err);
+    } catch (err: any) {
+      if (err?.code === "ECONNABORTED" || err?.code === "ETIMEDOUT") {
+        this.log.warn("Poll timed out, will retry next cycle");
+      } else {
+        this.log.error("Poll failed: %s", err);
+      }
     }
   }
 }
